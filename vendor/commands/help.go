@@ -15,15 +15,18 @@ func runHelp(args []string) error {
 	if len(args) == 0 {
 		fmt.Println("Commands: ")
 		for _, cmd := range CommandList {
-			fmt.Println(cmd.Name + ": " + cmd.Description)
+			aliasesString := ""
+			for i, alias := range cmd.Aliases {
+				if i == len(cmd.Aliases)-1 {
+					aliasesString += alias
+				} else {
+					aliasesString += alias + ", "
+				}
+			}
+			fmt.Printf("%s (%s): %s\n", cmd.Name, aliasesString, cmd.Description)
 		}
 		return nil
 	}
 
-	for _, cmd := range CommandList {
-		if cmd.Name == args[0] {
-			fmt.Println(cmd.Name)
-		}
-	}
 	return nil
 }
